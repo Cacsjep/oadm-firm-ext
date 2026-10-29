@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OADM - AXIS Firmware Downloader</title>
+  <link rel="icon" href="app-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="shell">
+    <main>
+      <header class="topbar">
+        <img class="logo" src="app-icon.png" alt="">
+        <h1>OADM - AXIS Firmware Downloader</h1>
+        <div class="topbar-tools">
+          <label class="check"><input type="checkbox" id="srcMPQT" checked> Cameras</label>
+          <label class="check"><input type="checkbox" id="srcPACS" checked> Audio &amp; other</label>
+          <span class="index-status"><span id="indexStatus">Loading product index…</span> · <button class="link" id="refreshIndex">Refresh</button></span>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="col-main">
+          <div class="search" id="searchWrap">
+            <svg viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 4.4 12.4l4.1 4.1 1.4-1.4-4.1-4.1A7 7 0 0 0 11 4Zm0 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/></svg>
+            <input id="search" type="text" placeholder="Search product, e.g. M3098-LV, P1375, C1410…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="suggest">
+            <kbd>/</kbd>
+            <ul id="suggest" class="suggest" role="listbox" hidden></ul>
+          </div>
+
+          <div id="product" class="product" hidden></div>
+
+          <div id="empty" class="empty">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 5h16v10H4V5Zm-2 0a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7v2h3v2H8v-2h3v-2H4a2 2 0 0 1-2-2V5Z"/></svg>
+            </div>
+            <h2>Find an AXIS product</h2>
+            <p>Type a model name. Pick it to see the latest firmware for each AXIS OS track, then add what you need to the download list.</p>
+          </div>
+        </section>
+
+        <aside class="col-side" id="listPanel">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Download list</h2>
+              <span class="pill" id="listMeta">0 files</span>
+            </div>
+            <ul id="dlList" class="dl-list"></ul>
+            <div id="dlEmpty" class="dl-empty">Nothing queued yet. Add firmware from a product.</div>
+            <div class="panel-actions">
+              <button class="btn ghost" id="clearList">Clear</button>
+              <button class="btn primary" id="downloadAll">
+                <svg viewBox="0 0 24 24"><path d="M11 4h2v9.2l3.3-3.3 1.4 1.4L12 17l-5.7-5.7 1.4-1.4 3.3 3.3V4ZM5 19h14v2H5v-2Z"/></svg>
+                Download all
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <aside id="viewer" class="viewer" aria-hidden="true">
+    <div class="viewer-head">
+      <span class="viewer-title" id="viewerTitle"></span>
+      <a class="icon-btn" id="viewerExternal" href="#" target="_blank" rel="noopener" data-external title="Open in new tab">
+        <svg viewBox="0 0 24 24"><path d="M14 4h6v6h-2V7.4l-7.3 7.3-1.4-1.4L16.6 6H14V4ZM5 6h6v2H6v10h10v-5h2v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"/></svg>
+      </a>
+      <button class="icon-btn" id="viewerClose" title="Close (Esc)">
+        <svg viewBox="0 0 24 24"><path d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5Z"/></svg>
+      </button>
+    </div>
+    <div class="viewer-body">
+      <div class="viewer-loading" id="viewerLoading"><span class="spinner"></span></div>
+      <iframe id="viewerFrame" title="Page viewer"></iframe>
+    </div>
+    <div class="viewer-resize" id="viewerResize" title="Drag to resize"></div>
+  </aside>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
