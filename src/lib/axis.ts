@@ -234,6 +234,10 @@ export function releaseNotesUrl(v: Version, anchors: Set<string>) {
 // ---------- sign-in ----------
 
 export const LOGIN_URL = BASE + "/my-axis/login";
+// Where the login returns to: the plain download index, light and quick, and a
+// known address to close the login window on before it even renders.
+export const LOGIN_DONE_URL = BASE + "/ftp/pub_soft/";
+export const LOGIN_POPUP_URL = `${LOGIN_URL}?axis_destination=${encodeURIComponent(LOGIN_DONE_URL)}`;
 // axis.com sets this cookie while signed in.
 export const AUTH_COOKIE = "axis_auth";
 // Any firmware file works as a probe: signed out, axis.com redirects the

@@ -5,7 +5,7 @@ import { computed, reactive, ref, shallowRef, toRaw } from "vue";
 import { toast } from "vue-sonner";
 import {
   INDEX_TTL_MS, SOURCES, type Product, type ProductVersions, type Source, type Version,
-  AUTH_COOKIE, LOGIN_URL, checkSignedIn, displayName, fetchListing, latestLts, fetchNoteAnchors, firmwareFiles, loadVersions, norm, parseSize, versionLabel,
+  AUTH_COOKIE, LOGIN_DONE_URL, LOGIN_POPUP_URL, checkSignedIn, displayName, fetchListing, latestLts, fetchNoteAnchors, firmwareFiles, loadVersions, norm, parseSize, versionLabel,
 } from "@/lib/axis";
 import { type Device, type ImportedList, type Track, cleanModel, matchProduct, planFor, readDeviceFile, variantsOf } from "@/lib/devices";
 
@@ -138,14 +138,16 @@ export async function refreshSignIn() {
 // My Axis login in a small popup window (a normal axis.com window, so its cookies
 // are first-party); it closes itself once the sign-in is detected.
 let loginWindow: number | undefined;
+let loginTab: number | undefined;
 export const loginOpen = ref(false);
 
 export async function openLogin() {
   if (loginWindow != null) {
     try { await chrome.windows.update(loginWindow, { focused: true }); return; } catch { loginWindow = undefined; }
   }
-  const win = await chrome.windows.create({ url: LOGIN_URL, type: "popup", width: 520, height: 760, focused: true });
+  const win = await chrome.windows.create({ url: LOGIN_POPUP_URL, type: "popup", width: 520, height: 760, focused: true });
   loginWindow = win?.id;
+  loginTab = win?.tabs?.[0]?.id;
   loginOpen.value = loginWindow != null;
 }
 
@@ -399,9 +401,17 @@ export async function boot() {
     closeLogin();
     confirmSignIn();
   });
+  // The login window's address is visible through the axis.com host permission (no
+  // "tabs" permission needed): close it as soon as it heads to the return address.
+  chrome.tabs.onUpdated.addListener((tabId, info) => {
+    if (tabId !== loginTab || !info.url?.startsWith(LOGIN_DONE_URL)) return;
+    closeLogin();
+    confirmSignIn();
+  });
   chrome.windows.onRemoved.addListener(id => {
     if (id !== loginWindow) return;
     loginWindow = undefined;
+    loginTab = undefined;
     loginOpen.value = false;
     refreshSignIn();
   });
