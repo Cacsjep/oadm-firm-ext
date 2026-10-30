@@ -3,15 +3,9 @@
   "name": "OADM Firmware Downloader for AXIS devices",
   "version": "1.4",
   "description": "Find AXIS OS firmware, import devices from OADM or AXIS Device Manager and batch-download updates with your My Axis account.",
-  "permissions": ["downloads", "cookies", "storage", "declarativeNetRequestWithHostAccess"],
-  "host_permissions": ["https://www.axis.com/*", "https://*.axis.com/*"],
+  "permissions": ["downloads", "cookies", "storage"],
+  "host_permissions": ["https://*.axis.com/*"],
   "background": { "service_worker": "main.js" },
-  "content_scripts": [{
-    "matches": ["https://*.axis.com/*"],
-    "js": ["frame.js"],
-    "all_frames": true,
-    "run_at": "document_start"
-  }],
   "icons": { "128": "app-icon.png" },
   "action": {
     "default_title": "OADM Firmware Downloader",

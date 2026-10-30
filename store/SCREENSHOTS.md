@@ -21,6 +21,6 @@ Use a dark system theme for all of them, or a light one for all; do not mix.
 3. **Product view.** Search a current camera (for example `P3265-LVE`) with no import, so the track cards show:
    Active, LTS 2026, LTS 2024.
 4. **Download list.** A few files queued and one downloading, with its progress bar.
-5. **Release notes in the side panel.** Click a card's **Release notes** so the panel is open beside the app.
+5. **Search.** Type part of a model name (for example `M30`) so the product suggestions list is open.
 
 Keep real device data out of the shots: use a sample list, and blur or avoid file names that identify a customer.

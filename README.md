@@ -13,8 +13,8 @@ A Chrome extension that finds and batch-downloads AXIS OS firmware from axis.com
   and 2.x). Models are matched to their products, and each row gets an update version: recommended (stays on
   the device's track), latest LTS or active track, or any version you pick.
 - **Download list** that queues the firmware files and downloads them in one go through Chrome.
-- **Sign-in check**: downloads need a My Axis account, so the extension asks you to sign in first, right in
-  its side panel.
+- **Sign-in check**: downloads need a My Axis account, so the extension asks you to sign in first, in a small
+  window that closes by itself once you are signed in.
 
 ## Install
 
@@ -35,7 +35,7 @@ npm run dev   # rebuilds dist/ on every change; reload the extension to see it
 ```
 
 Built with Vue 3, Vite, Tailwind CSS and [shadcn-vue](https://www.shadcn-vue.com/). The app lives in `src/`,
-and the extension files that are copied as they are (manifest, service worker, content script, icon) in `public/`.
+and the extension files that are copied as they are (manifest, service worker, icon) in `public/`.
 
 ## Publish
 
@@ -50,9 +50,10 @@ Screenshot plan: [store/SCREENSHOTS.md](store/SCREENSHOTS.md). Privacy policy: [
 ## How it works
 
 Firmware listings are read from the axis.com download index (`/ftp/pub_soft/`), and downloads go through
-`chrome.downloads` with your browser's axis.com cookies. The extension removes axis.com's frame-blocking headers
-only for pages shown in its own tab, so they can open in the side panel; every other tab keeps axis.com's
-protection. Nothing is collected or sent anywhere else; see the [privacy policy](PRIVACY.md).
+`chrome.downloads` with your browser's axis.com cookies. The sign-in check reads whether the `axis_auth` cookie
+exists and confirms it with a request that downloads nothing. Links open in normal tabs; the extension does not
+change axis.com pages or their headers. Nothing is collected or sent anywhere else; see the
+[privacy policy](PRIVACY.md).
 
 ## Trademarks
 

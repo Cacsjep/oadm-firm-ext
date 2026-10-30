@@ -44,7 +44,7 @@ BATCH DOWNLOAD
 Queue firmware from many products and download everything in one go, with progress per file.
 
 YOUR MY AXIS ACCOUNT
-Axis firmware downloads need a signed-in My Axis account. The extension tells you when you are signed out and lets you sign in right in its side panel.
+Axis firmware downloads need a signed-in My Axis account. The extension tells you when you are signed out and opens the My Axis sign-in in a small window that closes by itself.
 
 PRIVATE BY DESIGN
 No servers of its own, no analytics, no tracking. The extension talks to axis.com only, and everything it keeps stays in your browser.
@@ -81,9 +81,7 @@ Find AXIS OS firmware on axis.com and download it, for single products or for a 
 | `downloads` | Saves the firmware files the user queued from axis.com to the downloads folder and shows their progress. |
 | `cookies` | Reads whether the axis.com sign-in cookie (axis_auth) exists, to tell the user to sign in before downloading. Only its presence and expiry are used; nothing is stored or sent. |
 | `storage` | Keeps the download list, the imported device list (model and firmware version only), the product index cache and settings in the browser. |
-| `declarativeNetRequestWithHostAccess` | Removes axis.com's frame-blocking headers only for frames inside the extension's own tab, so the My Axis login and AXIS OS release notes can open in the extension's side panel. All other tabs keep axis.com's headers. |
-| Host permission `https://www.axis.com/*`, `https://*.axis.com/*` | Reads the firmware listings and release notes on axis.com, downloads firmware with the user's axis.com session, and shows axis.com pages (login, release notes, product pages) in the side panel. The login uses several axis.com subdomains. |
-| Content script on `https://*.axis.com/*` | Hides the axis.com cookie banner, and only when the page is shown inside the extension's side panel (the banner's consent cookie cannot be stored in that frame, so it would reappear on every page). It does nothing in normal tabs. |
+| Host permission `https://*.axis.com/*` | Reads the firmware listings on www.axis.com and the AXIS OS release notes on help.axis.com, and checks the sign-in: a request for a firmware file (without downloading it) is redirected through the axis.com login hosts when the user is signed out. No other sites are accessed. |
 
 **Remote code**
 
@@ -119,6 +117,5 @@ https://github.com/Cacsjep/oadm-firm-ext/blob/master/PRIVACY.md
 
 ## Notes for review
 
-If the review asks about the header removal, the short answer: the rule is limited to `sub_frame` requests in the
-extension's own tab (`tabIds`) and to frames the extension's page opens (`initiatorDomains`); see `public/main.js`
-and `src/lib/frames.ts`.
+The extension changes no web pages: it has no content scripts and does not modify network requests or headers.
+Links open in normal tabs, and the My Axis login in a normal popup window (`chrome.windows.create`).

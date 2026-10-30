@@ -123,18 +123,6 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Arrow pointing at the login panel. */
-@theme {
-    --animate-nudge-x: nudge-x 1.2s ease-in-out infinite;
-    @keyframes nudge-x {
-        0%, 100% { transform: translateX(0); }
-        50% { transform: translateX(8px); }
-    }
-}
-
-/* Width of the page viewer sheet; the app moves left by the same amount. */
-:root { --viewer-w: clamp(420px, 45vw, 1100px); }
-
 @layer base {
   * {
     @apply border-border outline-ring/50;

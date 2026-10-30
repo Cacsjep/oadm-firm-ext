@@ -52,7 +52,7 @@ async function toggle(v: Version) {
         </div>
       </div>
 
-      <!-- Fixed card width so cards don't stretch/reflow when the viewer panel opens. -->
+      <!-- Fixed card width so cards keep their size however wide the window is. -->
       <div v-if="cards.length" class="grid grid-cols-[repeat(auto-fill,250px)] gap-3">
         <Card
           v-for="c in cards"

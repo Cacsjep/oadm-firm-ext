@@ -31,12 +31,10 @@ In `chrome.storage.local` in your browser profile:
 Nothing is synced or sent to anyone. **Clear** in the imported devices and download list removes those entries;
 removing the extension removes all of it.
 
-## Pages shown in the side panel
+## Links and sign-in
 
-Links (release notes, the My Axis login) open in a side panel inside the extension's tab. These are axis.com pages,
-loaded directly from axis.com under Axis's own privacy policy. To allow it, the extension removes axis.com's
-frame-blocking headers for frames inside its own tab only; every other tab keeps them. A small script on axis.com
-pages hides the cookie banner, and only when the page is shown in that panel.
+Release notes and product pages open in a normal browser tab, and the My Axis login in a normal (popup) browser
+window. These are axis.com pages under Axis's own privacy policy; the extension does not read or change them.
 
 ## Downloads
 

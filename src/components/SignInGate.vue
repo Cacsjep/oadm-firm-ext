@@ -1,29 +1,17 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, watch } from "vue";
-import { ArrowRight, LogIn } from "@lucide/vue";
+import { onBeforeUnmount, onMounted } from "vue";
+import { LogIn } from "@lucide/vue";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
-import { LOGIN_URL } from "@/lib/axis";
-import { refreshSignIn } from "@/state";
-import { openViewer, viewer } from "@/viewer";
+import { Spinner } from "@/components/ui/spinner";
+import { loginOpen, openLogin, refreshSignIn } from "@/state";
 
-// Signed out, the login is the only thing to do: open it right away. The gate goes
-// away once the sign-in is detected, and the login panel goes with it.
-//
 // The axis_auth cookie appears while the login is still redirecting, so the first
 // check can still land on the login page. Keep checking while waiting: the cookie
 // read is local, axis.com is only asked once the cookie exists.
 let poll: ReturnType<typeof setInterval> | undefined;
-onMounted(() => {
-  openViewer(LOGIN_URL, "Sign in to My Axis");
-  poll = setInterval(refreshSignIn, 3000);
-});
-// Each page the login panel finishes loading may be the end of the sign-in.
-watch(() => viewer.loads, () => refreshSignIn());
-onBeforeUnmount(() => {
-  clearInterval(poll);
-  if (viewer.url === LOGIN_URL) viewer.open = false;
-});
+onMounted(() => { poll = setInterval(refreshSignIn, 3000); });
+onBeforeUnmount(() => clearInterval(poll));
 </script>
 
 <template>
@@ -46,16 +34,16 @@ onBeforeUnmount(() => {
       </svg>
       <EmptyTitle class="text-xl">Sign in to My Axis first</EmptyTitle>
       <EmptyDescription>
-        Firmware downloads need your axis.com account. This page notices the sign-in on its own.
+        Firmware downloads need your axis.com account. Sign in in the window that opens;
+        it closes by itself and this page continues.
       </EmptyDescription>
     </EmptyHeader>
     <EmptyContent>
-      <!-- Points at the login panel; without the panel there is nothing to point at, so offer to open it. -->
-      <div v-if="viewer.open && viewer.url === LOGIN_URL" class="flex items-center gap-2 font-medium text-primary">
-        Sign in on the right
-        <ArrowRight class="size-5 animate-nudge-x motion-reduce:animate-none" />
+      <div v-if="loginOpen" class="flex flex-col items-center gap-3">
+        <span class="flex items-center gap-2 text-sm text-muted-foreground"><Spinner /> Waiting for the sign-in…</span>
+        <Button variant="outline" @click="openLogin">Show sign-in window</Button>
       </div>
-      <Button v-else @click="openViewer(LOGIN_URL, 'Sign in to My Axis')"><LogIn /> Sign in to My Axis</Button>
+      <Button v-else @click="openLogin"><LogIn /> Sign in to My Axis</Button>
     </EmptyContent>
   </Empty>
 </template>

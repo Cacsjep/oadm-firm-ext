@@ -5,9 +5,8 @@ import { computed, reactive, ref, shallowRef, toRaw } from "vue";
 import { toast } from "vue-sonner";
 import {
   INDEX_TTL_MS, SOURCES, type Product, type ProductVersions, type Source, type Version,
-  AUTH_COOKIE, checkSignedIn, displayName, fetchListing, latestLts, fetchNoteAnchors, firmwareFiles, loadVersions, norm, parseSize, versionLabel,
+  AUTH_COOKIE, LOGIN_URL, checkSignedIn, displayName, fetchListing, latestLts, fetchNoteAnchors, firmwareFiles, loadVersions, norm, parseSize, versionLabel,
 } from "@/lib/axis";
-import { allowAxisFramesInThisTab } from "@/lib/frames";
 import { type Device, type ImportedList, type Track, cleanModel, matchProduct, planFor, readDeviceFile, variantsOf } from "@/lib/devices";
 
 const store = {
@@ -132,7 +131,26 @@ export const signedIn = ref<boolean | null>(null);
 export async function refreshSignIn() {
   const queued = list.value.find(i => i.state !== "complete")?.url;
   signedIn.value = await checkSignedIn(queued);
+  if (signedIn.value) closeLogin();
   return signedIn.value;
+}
+
+// My Axis login in a small popup window (a normal axis.com window, so its cookies
+// are first-party); it closes itself once the sign-in is detected.
+let loginWindow: number | undefined;
+export const loginOpen = ref(false);
+
+export async function openLogin() {
+  if (loginWindow != null) {
+    try { await chrome.windows.update(loginWindow, { focused: true }); return; } catch { loginWindow = undefined; }
+  }
+  const win = await chrome.windows.create({ url: LOGIN_URL, type: "popup", width: 520, height: 760, focused: true });
+  loginWindow = win?.id;
+  loginOpen.value = loginWindow != null;
+}
+
+function closeLogin() {
+  if (loginWindow != null) chrome.windows.remove(loginWindow).catch(() => {});
 }
 
 // ---------- download list ----------
@@ -357,8 +375,6 @@ export async function addAll() {
 // ---------- boot ----------
 
 export async function boot() {
-  // Before anything can open the viewer (the login opens it right away).
-  await allowAxisFramesInThisTab().catch(() => {});
   Object.assign(sourcesOn, await store.get("sourcesOn", sourcesOn));
   list.value = await store.get<ListItem[]>("dlList", []);
   if (list.value.some(i => i.state === "downloading")) startPolling();
@@ -369,6 +385,12 @@ export async function boot() {
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refreshSignIn(); });
   chrome.cookies.onChanged.addListener(({ cookie }) => {
     if (cookie.name === AUTH_COOKIE && cookie.domain.endsWith("axis.com")) refreshSignIn();
+  });
+  chrome.windows.onRemoved.addListener(id => {
+    if (id !== loginWindow) return;
+    loginWindow = undefined;
+    loginOpen.value = false;
+    refreshSignIn();
   });
   await loadIndex();
   fleet.value = await store.get<ImportedList | null>("fleet", null);

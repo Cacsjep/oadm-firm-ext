@@ -3,7 +3,7 @@ import { Download, X } from "@lucide/vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { type ListItem, clearList, downloadAll, list, pendingCount, removeItem, totalSize } from "@/state";
+import { type ListItem, clearList, downloadAll, list, openLogin, pendingCount, removeItem, totalSize } from "@/state";
 import { displayName, fmtSize } from "@/lib/axis";
 
 const pct = (i: ListItem) => (i.total ? Math.round(((i.received || 0) / i.total) * 100) : 0);
@@ -32,7 +32,7 @@ const pct = (i: ListItem) => (i.total ? Math.round(((i.received || 0) / i.total)
         </div>
         <div v-else-if="i.state === 'complete'" class="col-span-2 mt-1 text-xs text-muted-foreground">✓ Downloaded</div>
         <div v-else-if="i.state === 'auth'" class="col-span-2 mt-1 text-xs text-destructive">
-          Got a login page instead of firmware. <a href="https://www.axis.com/" target="_blank" rel="noopener" data-external class="underline">Sign in on axis.com</a>, then download again.
+          Got a login page instead of firmware. <button class="underline" @click="openLogin">Sign in to My Axis</button>, then download again.
         </div>
         <div v-else-if="i.state === 'failed'" class="col-span-2 mt-1 text-xs text-destructive">Failed: {{ i.error || "unknown error" }}</div>
       </li>
