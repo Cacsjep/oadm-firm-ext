@@ -153,6 +153,13 @@ function closeLogin() {
   if (loginWindow != null) chrome.windows.remove(loginWindow).catch(() => {});
 }
 
+async function confirmSignIn() {
+  for (let i = 0; i < 6; i++) {
+    if (await refreshSignIn()) return;
+    await new Promise(r => setTimeout(r, 500));
+  }
+}
+
 // ---------- download list ----------
 
 export interface ListItem {
@@ -383,8 +390,14 @@ export async function boot() {
   // Signing in happens in another tab; check again when the user comes back, and
   // as soon as the axis_auth cookie is set or removed.
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refreshSignIn(); });
-  chrome.cookies.onChanged.addListener(({ cookie }) => {
-    if (cookie.name === AUTH_COOKIE && cookie.domain.endsWith("axis.com")) refreshSignIn();
+  chrome.cookies.onChanged.addListener(({ cookie, removed }) => {
+    if (cookie.name !== AUTH_COOKIE || !cookie.domain.endsWith("axis.com")) return;
+    if (removed) return void refreshSignIn();
+    // Signed in: close the login window right away instead of after the probe,
+    // then confirm. The cookie can come a moment before the session is complete,
+    // so the probe is retried briefly before the result counts.
+    closeLogin();
+    confirmSignIn();
   });
   chrome.windows.onRemoved.addListener(id => {
     if (id !== loginWindow) return;
