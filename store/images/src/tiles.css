@@ -1,0 +1,48 @@
+/* Shared look of the store images: the app's dark theme, violet accent and Geist. */
+@font-face {
+  font-family: "Geist";
+  src: url("../../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("../../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+}
+
+:root {
+  --bg: #141416;
+  --card: #1e1e21;
+  --border: #ffffff1a;
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --primary: #7c5cf0;
+  --primary-soft: #7c5cf033;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 100%; height: 100%; }
+body {
+  font-family: "Geist", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(60% 90% at 85% 10%, #7c5cf055, transparent 70%),
+    radial-gradient(50% 70% at 0% 100%, #7c5cf02a, transparent 70%),
+    var(--bg);
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon { border-radius: 22%; box-shadow: 0 10px 40px #7c5cf066; }
+.name { font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+.for { color: var(--muted); font-weight: 500; }
+.tagline { color: var(--muted); line-height: 1.4; }
+.notice { position: absolute; color: #71717a; font-size: 11px; line-height: 1.4; }
+
+/* Mini UI pieces (marquee) */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
+.badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; }
+.badge.active { background: var(--primary); color: #fff; }
+.badge.lts { background: #27272a; color: #d4d4d8; }
+.mono { font-family: "Geist Mono", monospace; }

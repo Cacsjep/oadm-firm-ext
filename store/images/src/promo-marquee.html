@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Promo marquee 1400x560</title>
+<link rel="stylesheet" href="tiles.css">
+<style>
+  html, body { width: 1400px; height: 560px; }
+  body { display: grid; grid-template-columns: 520px 1fr; align-items: center; padding: 0 70px; gap: 56px; }
+  .icon { width: 84px; height: 84px; margin-bottom: 24px; }
+  .name { font-size: 48px; }
+  .for { font-size: 26px; margin-top: 8px; }
+  .tagline { font-size: 19px; margin-top: 20px; max-width: 500px; }
+  .notice { left: 70px; width: 520px; bottom: 24px; font-size: 12px; }
+
+  /* Imported devices table, as in the app */
+  .card { padding: 6px 0; font-size: 15px; }
+  .head, .r { display: grid; grid-template-columns: 120px 64px 100px 1fr; align-items: center; padding: 9px 22px; gap: 10px; }
+  .head { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .r { border-top: 1px solid var(--border); }
+  .model { color: #a78bfa; font-weight: 600; }
+  .fw { color: var(--muted); font-size: 13px; }
+  .pick { display: flex; align-items: center; gap: 8px; white-space: nowrap; border: 1px solid var(--border); border-radius: 9px; padding: 7px 12px; font-weight: 600; }
+  .pick small { color: var(--muted); font-weight: 400; font-size: 12px; }
+  .pick::after { content: ""; margin-left: auto; width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg) translateY(-3px); }
+  .title { display: flex; align-items: center; justify-content: space-between; padding: 10px 22px 14px; font-weight: 600; font-size: 17px; }
+  .btn { background: var(--primary); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 8px; }
+</style>
+</head>
+<body>
+  <div>
+    <img class="icon" src="../../../public/app-icon.png" alt="">
+    <div class="name">OADM Firmware Downloader</div>
+    <div class="for">for AXIS devices</div>
+    <div class="tagline">Import your devices from OADM or AXIS Device Manager and download the right AXIS OS firmware for every model at once.</div>
+  </div>
+  <div class="card">
+    <div class="title">Imported devices <span class="btn">Add all (4)</span></div>
+    <div class="head"><span>Model</span><span>Devices</span><span>Installed</span><span>Update to</span></div>
+    <div class="r"><span class="model">M3206-LVE</span><span>12</span><span class="fw mono">10.12.323</span><span class="pick"><span class="mono">10.12.338</span><small>LTS 2022 latest</small></span></div>
+    <div class="r"><span class="model">P3265-LVE</span><span>8</span><span class="fw mono">12.2.52</span><span class="pick"><span class="mono">12.11.147</span><small>LTS 2026 latest</small></span></div>
+    <div class="r"><span class="model">P1455-LE</span><span>5</span><span class="fw mono">11.8.61</span><span class="pick"><span>P1455-LE 29 mm ·</span><span class="mono">11.11.238</span><small>LTS 2024 latest</small></span></div>
+    <div class="r"><span class="model">Q6075-E</span><span>3</span><span class="fw mono">11.11.100</span><span class="pick"><span class="mono">12.11.147</span><small>LTS 2026 latest</small></span></div>
+  </div>
+  <div class="notice">OADM is an independent project. Not affiliated with or endorsed by Axis Communications AB. AXIS is a trademark of Axis AB.</div>
+</body>
+</html>

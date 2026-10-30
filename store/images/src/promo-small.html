@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Promo small 440x280</title>
+<link rel="stylesheet" href="tiles.css">
+<style>
+  html, body { width: 440px; height: 280px; }
+  body { display: flex; flex-direction: column; justify-content: center; padding: 0 36px; gap: 18px; }
+  .row { display: flex; align-items: center; gap: 16px; }
+  .icon { width: 72px; height: 72px; }
+  .name { font-size: 30px; }
+  .for { font-size: 17px; margin-top: 4px; }
+  .tagline { font-size: 15px; max-width: 360px; }
+  .chips { display: flex; gap: 8px; }
+  .notice { left: 36px; right: 36px; bottom: 14px; font-size: 9.5px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <img class="icon" src="../../../public/app-icon.png" alt="">
+    <div>
+      <div class="name">OADM Firmware<br>Downloader</div>
+      <div class="for">for AXIS devices</div>
+    </div>
+  </div>
+  <div class="chips">
+    <span class="badge active">Active</span>
+    <span class="badge lts">LTS 2026</span>
+    <span class="badge lts">LTS 2024</span>
+    <span class="badge lts">Batch download</span>
+  </div>
+  <div class="notice">Independent project, not affiliated with Axis Communications AB. AXIS is a trademark of Axis AB.</div>
+</body>
+</html>

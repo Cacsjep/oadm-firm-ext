@@ -21,7 +21,7 @@ const status = computed(() => {
 <template>
   <header class="flex flex-wrap items-center gap-3 border-b px-7 py-3.5 max-sm:px-4">
     <img class="size-7 rounded-md" src="/app-icon.png" alt="">
-    <h1 class="text-xl font-bold tracking-tight">OADM - AXIS Firmware Downloader</h1>
+    <h1 class="text-xl font-bold tracking-tight">OADM Firmware Downloader for AXIS devices</h1>
     <div class="ml-auto flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
       <label v-for="s in sources" :key="s.id" class="flex cursor-pointer items-center gap-2 text-foreground/80 select-none">
         <Checkbox :model-value="sourcesOn[s.id]" @update:model-value="v => setSource(s.id, v === true)" />

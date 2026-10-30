@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "OADM - AXIS Firmware Downloader",
+  "name": "OADM Firmware Downloader for AXIS devices",
   "version": "1.4",
-  "description": "Search AXIS products and batch-download firmware (LTS and active track) using your axis.com session.",
+  "description": "Find AXIS OS firmware, import devices from OADM or AXIS Device Manager and batch-download updates with your My Axis account.",
   "permissions": ["downloads", "cookies", "storage", "declarativeNetRequestWithHostAccess"],
   "host_permissions": ["https://www.axis.com/*", "https://*.axis.com/*"],
   "background": { "service_worker": "main.js" },
@@ -14,7 +14,7 @@
   }],
   "icons": { "128": "app-icon.png" },
   "action": {
-    "default_title": "OADM Firmware",
+    "default_title": "OADM Firmware Downloader",
     "default_icon": "app-icon.png"
   }
 }

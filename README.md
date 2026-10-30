@@ -1,4 +1,4 @@
-# OADM - AXIS Firmware Downloader
+# OADM Firmware Downloader for AXIS devices
 
 **An independent open source project. Not affiliated with or endorsed by Axis Communications AB. AXIS is a trademark of Axis AB.**
 
@@ -37,12 +37,22 @@ npm run dev   # rebuilds dist/ on every change; reload the extension to see it
 Built with Vue 3, Vite, Tailwind CSS and [shadcn-vue](https://www.shadcn-vue.com/). The app lives in `src/`,
 and the extension files that are copied as they are (manifest, service worker, content script, icon) in `public/`.
 
+## Publish
+
+```sh
+npm run zip            # builds and writes release/oadm-firmware-downloader-<version>.zip
+npm run store:images   # renders the store tiles from store/images/src/
+```
+
+Store listing texts, permission justifications and privacy answers: [store/LISTING.md](store/LISTING.md).
+Screenshot plan: [store/SCREENSHOTS.md](store/SCREENSHOTS.md). Privacy policy: [PRIVACY.md](PRIVACY.md).
+
 ## How it works
 
 Firmware listings are read from the axis.com download index (`/ftp/pub_soft/`), and downloads go through
 `chrome.downloads` with your browser's axis.com cookies. The extension removes axis.com's frame-blocking headers
 only for pages shown in its own tab, so they can open in the side panel; every other tab keeps axis.com's
-protection.
+protection. Nothing is collected or sent anywhere else; see the [privacy policy](PRIVACY.md).
 
 ## Trademarks
 
