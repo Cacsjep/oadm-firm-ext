@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "OADM - AXIS Firmware Downloader",
-  "version": "1.2",
+  "version": "1.4",
   "description": "Search AXIS products and batch-download firmware (LTS and active track) using your axis.com session.",
   "permissions": ["downloads", "cookies", "storage", "declarativeNetRequestWithHostAccess"],
   "host_permissions": ["https://www.axis.com/*", "https://*.axis.com/*"],
