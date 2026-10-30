@@ -81,7 +81,7 @@ Find AXIS OS firmware on axis.com and download it, for single products or for a 
 | `downloads` | Saves the firmware files the user queued from axis.com to the downloads folder and shows their progress. |
 | `cookies` | Reads whether the axis.com sign-in cookie (axis_auth) exists, to tell the user to sign in before downloading. Only its presence and expiry are used; nothing is stored or sent. |
 | `storage` | Keeps the download list, the imported device list (model and firmware version only), the product index cache and settings in the browser. |
-| Host permission `https://*.axis.com/*` | Reads the firmware listings on www.axis.com and the AXIS OS release notes on help.axis.com, and checks the sign-in: a request for a firmware file (without downloading it) is redirected through the axis.com login hosts when the user is signed out. No other sites are accessed. |
+| Host permission `https://*.axis.com/*` | Reads the firmware listings on www.axis.com and the AXIS OS release notes on help.axis.com, and checks the sign-in: a request for a firmware file (without downloading it) is redirected through the axis.com login hosts when the user is signed out. It also sees the address of the My Axis sign-in window the extension opened, to close that window as soon as the sign-in returns to axis.com. No other sites or tabs are accessed. |
 
 **Remote code**
 

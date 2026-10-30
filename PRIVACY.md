@@ -34,7 +34,9 @@ removing the extension removes all of it.
 ## Links and sign-in
 
 Release notes and product pages open in a normal browser tab, and the My Axis login in a normal (popup) browser
-window. These are axis.com pages under Axis's own privacy policy; the extension does not read or change them.
+window. These are axis.com pages under Axis's own privacy policy; the extension does not read or change their
+content. For the sign-in window it opened, it watches only the address, to close the window as soon as the sign-in
+returns to axis.com.
 
 ## Downloads
 
